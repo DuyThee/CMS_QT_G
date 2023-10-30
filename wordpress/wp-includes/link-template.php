@@ -1,3 +1,78 @@
+<style>
+.headlinesdate .headlinesdm,
+.news > .headlines .headlinesdate,
+.headlinesdate {
+  float: left;
+  font-family: "Prata", serif;
+}
+.headlines .headlinesdate {
+  font-size: 0.8em;
+  width: 15%;
+  min-width: 55px;
+  display: table-cell;
+  vertical-align: middle;
+  font-weight: bold;
+}
+.headlinesdate .headlinesdm,
+.news > .headlines .headlinesdate,
+.headlinesdate {
+  float: left;
+  font-family: "Prata", serif;
+}
+.headlinesdate .headlinesyear {
+  line-height: 3.5em;
+  float: left;
+  margin-left: 3px;
+}
+.headlines ul > li > .headlinestitle {
+  display: table-cell;
+  vertical-align: middle;
+  width: 85%;
+}
+.headlines ul > li > .headlinestitle > a {
+  color: black;
+}
+
+.headlines ul > li {
+  overflow: hidden;
+  display: table;
+  margin-bottom: 5px;
+  width: 100%;
+}
+.headlines ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.headlinesdate .headlinesday {
+  border-bottom: 1px solid #fff;
+}
+.news > .headlines .headlinesmonth {
+  line-height: 1.7em;
+}
+.headlinesdate .headlinesday,
+.news > .headlines .headlinesmonth {
+  line-height: 1.7em;
+}
+.newsall {
+  display: block;
+  padding: 10px;
+  text-align: center;
+  background: #62c6c8;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fff;
+}
+.recentpost > a:hover {
+  color: white;
+  margin-left: 100px;
+}
+a {
+  color: #428bca;
+  text-decoration: none;
+}
+</style>
+
 <?php
 /**
  * WordPress Link Template Functions
@@ -2762,51 +2837,129 @@ function posts_nav_link( $sep = '', $prelabel = '', $nxtlabel = '' ) {
  * }
  * @return string Markup for post links.
  */
-function get_the_post_navigation( $args = array() ) {
+// function get_the_post_navigation( $args = array() ) {
+// 	// Make sure the nav element has an aria-label attribute: fallback to the screen reader text.
+// 	if ( ! empty( $args['screen_reader_text'] ) && empty( $args['aria_label'] ) ) {
+// 		$args['aria_label'] = $args['screen_reader_text'];
+// 	}
+
+// 	$args = wp_parse_args(
+// 		$args,
+// 		array(
+// 			'prev_text'          => '%title',
+// 			'next_text'          => '%title',
+// 			'in_same_term'       => false,
+// 			'excluded_terms'     => '',
+// 			'taxonomy'           => 'category',
+// 			'screen_reader_text' => __( 'Post navigation' ),
+// 			'aria_label'         => __( 'Posts' ),
+// 			'class'              => 'post-navigation',
+// 		)
+// 	);
+
+// 	$navigation = '';
+
+// 	$previous = get_previous_post_link(
+// 		'<div class="nav-previous">%link</div>',
+// 		$args['prev_text'],
+// 		$args['in_same_term'],
+// 		$args['excluded_terms'],
+// 		$args['taxonomy']
+// 	);
+
+// 	$next = get_next_post_link(
+// 		'<div class="nav-next">%link</div>',
+// 		$args['next_text'],
+// 		$args['in_same_term'],
+// 		$args['excluded_terms'],
+// 		$args['taxonomy']
+// 	);
+
+// 	// Only add markup if there's somewhere to navigate to.
+// 	if ( $previous || $next ) {
+// 		$navigation = _navigation_markup( $previous . $next, $args['class'], $args['screen_reader_text'], $args['aria_label'] );
+// 	}
+
+// 	return $navigation;
+// }
+
+function get_the_post_navigation($args = array())
+{
 	// Make sure the nav element has an aria-label attribute: fallback to the screen reader text.
-	if ( ! empty( $args['screen_reader_text'] ) && empty( $args['aria_label'] ) ) {
+
+	
+	if (!empty($args['screen_reader_text']) && empty($args['aria_label'])) {
 		$args['aria_label'] = $args['screen_reader_text'];
 	}
 
 	$args = wp_parse_args(
 		$args,
 		array(
-			'prev_text'          => '%title',
-			'next_text'          => '%title',
-			'in_same_term'       => false,
-			'excluded_terms'     => '',
-			'taxonomy'           => 'category',
-			'screen_reader_text' => __( 'Post navigation' ),
-			'aria_label'         => __( 'Posts' ),
-			'class'              => 'post-navigation',
+			'prev_text' => '%title',
+			'next_text' => '%title',
+			'in_same_term' => false,
+			'excluded_terms' => '',
+			'taxonomy' => 'category',
+			'screen_reader_text' => __('Post navigation'),
+			'aria_label' => __('Posts'),
+			'class' => 'post-navigation',
 		)
 	);
 
 	$navigation = '';
 
-	$previous = get_previous_post_link(
-		'<div class="nav-previous">%link</div>',
-		$args['prev_text'],
-		$args['in_same_term'],
-		$args['excluded_terms'],
-		$args['taxonomy']
-	);
+	$previous_post = get_previous_post();
+	$next_post = get_next_post();
 
-	$next = get_next_post_link(
-		'<div class="nav-next">%link</div>',
-		$args['next_text'],
-		$args['in_same_term'],
-		$args['excluded_terms'],
-		$args['taxonomy']
-	);
+	if ($previous_post || $next_post) {
+		$output = '<div class="row"><div class="col-md-3"></div>';
+		$output .= '<div class="col-md-6">';
+		$output .= '<div class="recentpost">';
+		$output .= '<div class="headlines text-dark" style="background-color: white !important; padding-left: 150px">';
+		$output .= '<ul>';
 
-	// Only add markup if there's somewhere to navigate to.
-	if ( $previous || $next ) {
-		$navigation = _navigation_markup( $previous . $next, $args['class'], $args['screen_reader_text'], $args['aria_label'] );
+		if ($previous_post) {
+			$output .= '<li>';
+			$output .= '<div class="headlinesdate" style="font-weight: 300">';
+			$output .= '<div class="headlinesdm">';
+			$output .= '<div class="headlinesday border-bottom">' . get_the_time('d', $previous_post) . '</div>';
+			$output .= '<div class="headlinesmonth">' . get_the_time('m', $previous_post) . '</div>';
+			$output .= '</div>';
+			$output .= '<div class="headlinesyear">' . get_the_time('Y', $previous_post) . '</div>';
+			$output .= '</div>';
+			$output .= '<div class="headlinestitle text-dark">';
+			$output .= '<a class="text-dark" href="' . get_permalink($previous_post) . '">' . get_the_title($previous_post) . '</a>';
+			$output .= '</div>';
+			$output .= '</li>';
+		}
+
+		if ($next_post) {
+			$output .= '<li>';
+			$output .= '<div class="headlinesdate" style="font-weight: 300">';
+			$output .= '<div class="headlinesdm">';
+			$output .= '<div class="headlinesday border-bottom">' . get_the_time('d', $next_post) . '</div>';
+			$output .= '<div class="headlinesmonth">' . get_the_time('m', $next_post) . '</div>';
+			$output .= '</div>';
+			$output .= '<div class="headlinesyear">' . get_the_time('Y', $next_post) . '</div>';
+			$output .= '</div>';
+			$output .= '<div class="headlinestitle">';
+			$output .= '<a class="text-dark" href="' . get_permalink($next_post) . '">' . get_the_title($next_post) . '</a>';
+			$output .= '</div>';
+			$output .= '</li>';
+		}
+
+		$output .= '</ul>';
+		$output .= '</div>';
+		$output .= '</div>';
+		$output .= '</div>';
+		$output .= '<div class="col-md-3"></div>';
+		$output .= '</div>';
+		$navigation = $output;
 	}
 
 	return $navigation;
 }
+
 
 /**
  * Displays the navigation to next/previous post, when applicable.
