@@ -1,3 +1,11 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
 <?php
 /**
  * Comment template functions
@@ -1891,7 +1899,7 @@ function get_post_reply_link( $args = array(), $post = null ) {
 	$defaults = array(
 		'add_below'  => 'post',
 		'respond_id' => 'respond',
-		'reply_text' => __( 'Leave a Comment' ),
+	'reply_text' => __( ''/*'Leave a Comment'*/ ),
 		'login_text' => __( 'Log in to leave a Comment' ),
 		'before'     => '',
 		'after'      => '',
@@ -2502,59 +2510,46 @@ function comment_form( $args = array(), $post = null ) {
 	$required_indicator = ' ' . wp_required_field_indicator();
 	$required_text      = ' ' . wp_required_field_message();
 
-	$fields = array(
-		'author' => sprintf(
-			'<p class="comment-form-author">%s %s</p>',
-			sprintf(
-				'<label for="author">%s%s</label>',
-				__( 'Name' ),
-				( $req ? $required_indicator : '' )
-			),
-			sprintf(
-				'<input id="author" name="author" type="text" value="%s" size="30" maxlength="245" autocomplete="name"%s />',
-				esc_attr( $commenter['comment_author'] ),
-				( $req ? $required_attribute : '' )
-			)
-		),
-		'email'  => sprintf(
-			'<p class="comment-form-email">%s %s</p>',
-			sprintf(
-				'<label for="email">%s%s</label>',
-				__( 'Email' ),
-				( $req ? $required_indicator : '' )
-			),
-			sprintf(
-				'<input id="email" name="email" %s value="%s" size="30" maxlength="100" aria-describedby="email-notes" autocomplete="email"%s />',
-				( $html5 ? 'type="email"' : 'type="text"' ),
-				esc_attr( $commenter['comment_author_email'] ),
-				( $req ? $required_attribute : '' )
-			)
-		),
-		'url'    => sprintf(
-			'<p class="comment-form-url">%s %s</p>',
-			sprintf(
-				'<label for="url">%s</label>',
-				__( 'Website' )
-			),
-			sprintf(
-				'<input id="url" name="url" %s value="%s" size="30" maxlength="200" autocomplete="url" />',
-				( $html5 ? 'type="url"' : 'type="text"' ),
-				esc_attr( $commenter['comment_author_url'] )
-			)
-		),
-	);
+	// $fields = array(
+	// 	'email'  => sprintf(
+	// 		'<p class="comment-form-email">%s %s</p>',
+	// 		sprintf(
+	// 			'<label for="email">%s%s</label>',
+	// 			__( 'Email' ),
+	// 			( $req ? $required_indicator : '' )
+	// 		),
+	// 		sprintf(
+	// 			'<input id="email" name="email" %s value="%s" size="30" maxlength="100" aria-describedby="email-notes" autocomplete="email"%s />',
+	// 			( $html5 ? 'type="email"' : 'type="text"' ),
+	// 			esc_attr( $commenter['comment_author_email'] ),
+	// 			( $req ? $required_attribute : '' )
+	// 		)
+	// 	),
+	// 	'url'    => sprintf(
+	// 		'<p class="comment-form-url">%s %s</p>',
+	// 		sprintf(
+	// 			'<label for="url">%s</label>',
+	// 			__( 'Website' )
+	// 		),
+	// 		sprintf(
+	// 			'<input id="url" name="url" %s value="%s" size="30" maxlength="200" autocomplete="url" />',
+	// 			( $html5 ? 'type="url"' : 'type="text"' ),
+	// 			esc_attr( $commenter['comment_author_url'] )
+	// 		)
+	// 	),
+	// );
 
 	if ( has_action( 'set_comment_cookies', 'wp_set_comment_cookies' ) && get_option( 'show_comments_cookies_opt_in' ) ) {
 		$consent = empty( $commenter['comment_author_email'] ) ? '' : $checked_attribute;
 
 		$fields['cookies'] = sprintf(
-			'<p class="comment-form-cookies-consent">%s %s</p>',
+			//'<p class="comment-form-cookies-consent">%s %s</p>',
 			sprintf(
-				'<input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"%s />',
+				//'<input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"%s />',
 				$consent
 			),
 			sprintf(
-				'<label for="wp-comment-cookies-consent">%s</label>',
+				//'<label for="wp-comment-cookies-consent">%s</label>',
 				__( 'Save my name, email, and website in this browser for the next time I comment.' )
 			)
 		);
@@ -2579,11 +2574,37 @@ function comment_form( $args = array(), $post = null ) {
 		'comment_field'        => sprintf(
 			'<p class="comment-form-comment">%s %s</p>',
 			sprintf(
-				'<label for="comment">%s%s</label>',
-				_x( 'Comment', 'noun' ),
+				//'<label for="comment">%s%s</label>',
+				//_x( 'Comment', 'noun' ),
 				$required_indicator
 			),
-			'<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525"' . $required_attribute . '></textarea>'
+			//'<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525"' . $required_attribute . '></textarea>'
+			'<section class="card">
+			<div class="card-header">
+				<ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab"
+							aria-controls="posts" aria-selected="true">Make
+							a Post</a>
+					</li>
+				</ul>
+			</div>
+			<div class="card-body">
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+						<div class="form-group">
+							<label class="sr-only" for="message">post</label>
+							<textarea class="form-control" id="message" rows="3"
+								placeholder="What are you thinking..."></textarea>
+						</div>
+		
+					</div>
+				</div>
+				<div class="text-right">
+					<button type="submit" class="btn btn-primary">share</button>
+				</div>
+			</div>
+		</section>'
 		),
 		'must_log_in'          => sprintf(
 			'<p class="must-log-in">%s</p>',
@@ -2605,15 +2626,17 @@ function comment_form( $args = array(), $post = null ) {
 				wp_logout_url( apply_filters( 'the_permalink', get_permalink( $post_id ), $post_id ) )
 			),
 			$required_text
-		),
-		'comment_notes_before' => sprintf(
-			'<p class="comment-notes">%s%s</p>',
+		)
+		,
+			'comment_notes_before' => sprintf(
+			//'<p class="comment-notes">%s%s</p>',
 			sprintf(
-				'<span id="email-notes">%s</span>',
-				__( 'Your email address will not be published.' )
+			//'<span id="email-notes">%s</span>',
+				__( ' ' )
 			),
 			$required_text
-		),
+		)
+		,
 		'comment_notes_after'  => '',
 		'action'               => site_url( '/wp-comments-post.php' ),
 		'id_form'              => 'commentform',
@@ -2630,9 +2653,9 @@ function comment_form( $args = array(), $post = null ) {
 		'cancel_reply_before'  => ' <small>',
 		'cancel_reply_after'   => '</small>',
 		'cancel_reply_link'    => __( 'Cancel reply' ),
-		'label_submit'         => __( 'Post Comment' ),
-		'submit_button'        => '<input name="%1$s" type="submit" id="%2$s" class="%3$s" value="%4$s" />',
-		'submit_field'         => '<p class="form-submit">%1$s %2$s</p>',
+		'label_submit'         => __('' /*'Post Comment'*/ ),
+		'submit_button'        => ' ',
+		'submit_field'         => '<div class="text-right">%1$s %2$s</div>',
 		'format'               => 'xhtml',
 	);
 
@@ -2666,8 +2689,8 @@ function comment_form( $args = array(), $post = null ) {
 	 */
 	do_action( 'comment_form_before' );
 	?>
-	<div id="respond" class="<?php echo esc_attr( $args['class_container'] ); ?>">
-		<?php
+<div id="respond" class="<?php echo esc_attr( $args['class_container'] ); ?>">
+    <?php
 		echo $args['title_reply_before'];
 
 		comment_form_title( $args['title_reply'], $args['title_reply_to'], true, $post_id );
@@ -2869,8 +2892,8 @@ function comment_form( $args = array(), $post = null ) {
 
 		endif;
 		?>
-	</div><!-- #respond -->
-	<?php
+</div><!-- #respond -->
+<?php
 
 	/**
 	 * Fires after the comment form.
