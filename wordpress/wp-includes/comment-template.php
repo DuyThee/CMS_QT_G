@@ -1,11 +1,9 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 <?php
 /**
  * Comment template functions
@@ -1899,7 +1897,7 @@ function get_post_reply_link( $args = array(), $post = null ) {
 	$defaults = array(
 		'add_below'  => 'post',
 		'respond_id' => 'respond',
-	'reply_text' => __( ''/*'Leave a Comment'*/ ),
+		'reply_text' => __( '' ),
 		'login_text' => __( 'Log in to leave a Comment' ),
 		'before'     => '',
 		'after'      => '',
@@ -2510,46 +2508,82 @@ function comment_form( $args = array(), $post = null ) {
 	$required_indicator = ' ' . wp_required_field_indicator();
 	$required_text      = ' ' . wp_required_field_message();
 
-	// $fields = array(
-	// 	'email'  => sprintf(
-	// 		'<p class="comment-form-email">%s %s</p>',
-	// 		sprintf(
-	// 			'<label for="email">%s%s</label>',
-	// 			__( 'Email' ),
-	// 			( $req ? $required_indicator : '' )
-	// 		),
-	// 		sprintf(
-	// 			'<input id="email" name="email" %s value="%s" size="30" maxlength="100" aria-describedby="email-notes" autocomplete="email"%s />',
-	// 			( $html5 ? 'type="email"' : 'type="text"' ),
-	// 			esc_attr( $commenter['comment_author_email'] ),
-	// 			( $req ? $required_attribute : '' )
-	// 		)
-	// 	),
-	// 	'url'    => sprintf(
-	// 		'<p class="comment-form-url">%s %s</p>',
-	// 		sprintf(
-	// 			'<label for="url">%s</label>',
-	// 			__( 'Website' )
-	// 		),
-	// 		sprintf(
-	// 			'<input id="url" name="url" %s value="%s" size="30" maxlength="200" autocomplete="url" />',
-	// 			( $html5 ? 'type="url"' : 'type="text"' ),
-	// 			esc_attr( $commenter['comment_author_url'] )
-	// 		)
-	// 	),
-	// );
+	// Lấy ID người dùng hiện tại
+    $user_id = get_current_user_id();
+
+   // Lấy thông tin người dùng từ ID
+    $user = get_user_by('id', $user_id);
+
+   // Lấy tên người dùng
+   // Kiểm tra giá trị của biến $user
+   if ($user) {
+	// Lấy tên người dùng
+	$username = $user->user_login;
+   } else {
+	// Gán giá trị mặc định cho biến $username
+	$username = 'no name';
+   }
+	$name = $username;
+
+   // Trèn dữ liệu vào biến $commenter
+    $commenter['comment_author'] = $name;
+
+      // Mã hóa dữ liệu
+    $name = esc_attr($name);
+	 $fields = array(
+		'author' => sprintf(
+			'<p class="comment-form-author">%s %s</p>',
+			sprintf(
+				'<label for="author">%s%s</label>',
+				__( 'Name' ),
+				( $req ? $required_indicator : '' )
+			),
+			sprintf(
+				'<input id="author" name="author" type="text" value="%s" size="30" maxlength="245" autocomplete="name"%s />'
+				,
+				$name,
+				( $req ? $required_attribute : '' )
+			)
+		),
+		'email'  => sprintf(
+			'<p class="comment-form-email">%s %s</p>',
+			sprintf(
+				'<label for="email">%s%s</label>',
+				__( 'Email' ),
+				( $req ? $required_indicator : '' )
+			),
+			sprintf(
+				'<input id="email" name="email" %s value="%s" size="30" maxlength="100" aria-describedby="email-notes" autocomplete="email"%s />',
+				( $html5 ? 'type="email"' : 'type="text"' ),
+				esc_attr( $commenter['comment_author_email'] ),
+				( $req ? $required_attribute : '' )
+			)
+		),
+		'url'    => sprintf(
+			'<p class="comment-form-url">%s %s</p>',
+			sprintf(
+				'<label for="url">%s</label>',
+				__( 'Website' )
+			),
+			sprintf(
+				'<input id="url" name="url" %s value="%s" size="30" maxlength="200" autocomplete="url" />',
+				( $html5 ? 'type="url"' : 'type="text"' ),
+				esc_attr( $commenter['comment_author_url'] )
+			)
+		),
+	);
 
 	if ( has_action( 'set_comment_cookies', 'wp_set_comment_cookies' ) && get_option( 'show_comments_cookies_opt_in' ) ) {
 		$consent = empty( $commenter['comment_author_email'] ) ? '' : $checked_attribute;
 
 		$fields['cookies'] = sprintf(
-			//'<p class="comment-form-cookies-consent">%s %s</p>',
+			'<p class="comment-form-cookies-consent">%s %s</p>',
 			sprintf(
-				//'<input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"%s />',
+				'<input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"%s />',
 				$consent
 			),
 			sprintf(
-				//'<label for="wp-comment-cookies-consent">%s</label>',
+				'<label for="wp-comment-cookies-consent">%s</label>',
 				__( 'Save my name, email, and website in this browser for the next time I comment.' )
 			)
 		);
@@ -2572,39 +2606,39 @@ function comment_form( $args = array(), $post = null ) {
 	$defaults = array(
 		'fields'               => $fields,
 		'comment_field'        => sprintf(
-			'<p class="comment-form-comment">%s %s</p>',
+			'<p class="comment-form-comment">
+			<section class="card">
+    		<div class="card-header">
+        	<ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab"
+                    aria-controls="posts" aria-selected="true">Make
+                    a Post</a>
+            </li>
+        	</ul>
+    		</div>
+			<div class="card-body">
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+					<div class="form-group">
+						<label class="sr-only" for="comment"></label>
+						%s %s
+			       </div>
+			</div>
+		</div>
+		<div class="text-right">
+		<button type="submit" class="btn btn-primary">share</button>
+	</div>
+	</div>
+	</section>
+			</p>',
 			sprintf(
 				//'<label for="comment">%s%s</label>',
 				//_x( 'Comment', 'noun' ),
 				$required_indicator
 			),
-			//'<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525"' . $required_attribute . '></textarea>'
-			'<section class="card">
-			<div class="card-header">
-				<ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-					<li class="nav-item">
-						<a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab"
-							aria-controls="posts" aria-selected="true">Make
-							a Post</a>
-					</li>
-				</ul>
-			</div>
-			<div class="card-body">
-				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-						<div class="form-group">
-							<label class="sr-only" for="message">post</label>
-							<textarea class="form-control" id="message" rows="3"
-								placeholder="What are you thinking..."></textarea>
-						</div>
-		
-					</div>
-				</div>
-				<div class="text-right">
-					<button type="submit" class="btn btn-primary">share</button>
-				</div>
-			</div>
-		</section>'
+			'<textarea id="comment" name="comment" rows="3" placeholder="What are you thinking..."'. $required_attribute .'></textarea>'
+			// '<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525"' . $required_attribute . '></textarea>'
 		),
 		'must_log_in'          => sprintf(
 			'<p class="must-log-in">%s</p>',
@@ -2619,24 +2653,22 @@ function comment_form( $args = array(), $post = null ) {
 			'<p class="logged-in-as">%s%s</p>',
 			sprintf(
 				/* translators: 1: User name, 2: Edit user link, 3: Logout URL. */
-				__( 'Logged in as %1$s. <a href="%2$s">Edit your profile</a>. <a href="%3$s">Log out?</a>' ),
+			__('' /*'Logged in as %1$s. <a href="%2$s">Edit your profile</a>. <a href="%3$s">Log out?</a>'*/ ),
 				$user_identity,
 				get_edit_user_link(),
 				/** This filter is documented in wp-includes/link-template.php */
 				wp_logout_url( apply_filters( 'the_permalink', get_permalink( $post_id ), $post_id ) )
 			),
 			$required_text
-		)
-		,
-			'comment_notes_before' => sprintf(
-			//'<p class="comment-notes">%s%s</p>',
+		),
+		'comment_notes_before' => sprintf(
+			'<p class="comment-notes">%s%s</p>',
 			sprintf(
-			//'<span id="email-notes">%s</span>',
-				__( ' ' )
+				'<span id="email-notes">%s</span>',
+				__( 'Your email address will not be published.' )
 			),
 			$required_text
-		)
-		,
+		),
 		'comment_notes_after'  => '',
 		'action'               => site_url( '/wp-comments-post.php' ),
 		'id_form'              => 'commentform',
@@ -2653,9 +2685,9 @@ function comment_form( $args = array(), $post = null ) {
 		'cancel_reply_before'  => ' <small>',
 		'cancel_reply_after'   => '</small>',
 		'cancel_reply_link'    => __( 'Cancel reply' ),
-		'label_submit'         => __('' /*'Post Comment'*/ ),
-		'submit_button'        => ' ',
-		'submit_field'         => '<div class="text-right">%1$s %2$s</div>',
+		'label_submit'         => __( '' ),
+		'submit_button'        => '',
+		'submit_field'         => '<p class="form-submit">%1$s %2$s</p>',
 		'format'               => 'xhtml',
 	);
 
