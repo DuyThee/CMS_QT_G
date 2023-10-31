@@ -2516,28 +2516,7 @@ function comment_form( $args = array(), $post = null ) {
 	$required_indicator = ' ' . wp_required_field_indicator();
 	$required_text      = ' ' . wp_required_field_message();
 
-	// Lấy ID người dùng hiện tại
-    $user_id = get_current_user_id();
 
-   // Lấy thông tin người dùng từ ID
-    $user = get_user_by('id', $user_id);
-
-   // Lấy tên người dùng
-   // Kiểm tra giá trị của biến $user
-   if ($user) {
-	// Lấy tên người dùng
-	$username = $user->user_login;
-   } else {
-	// Gán giá trị mặc định cho biến $username
-	$username = 'no name';
-   }
-	$name = $username;
-
-   // Trèn dữ liệu vào biến $commenter
-    $commenter['comment_author'] = $name;
-
-      // Mã hóa dữ liệu
-    $name = esc_attr($name);
 	 $fields = array(
 		'author' => sprintf(
 			'<p class="comment-form-author">%s %s</p>',
@@ -2547,9 +2526,8 @@ function comment_form( $args = array(), $post = null ) {
 				( $req ? $required_indicator : '' )
 			),
 			sprintf(
-				'<input id="author" name="author" type="text" value="%s" size="30" maxlength="245" autocomplete="name"%s />'
-				,
-				$name,
+				'<input id="author" name="author" type="text" value="%s" size="30" maxlength="245" autocomplete="name"%s />',
+				esc_attr( $commenter['comment_author'] ),
 				( $req ? $required_attribute : '' )
 			)
 		),
