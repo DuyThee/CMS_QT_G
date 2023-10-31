@@ -44,6 +44,17 @@
     position: relative;
     top: .15em;
 }
+.post-time{
+    background: #F5CE31;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    border-radius: 50%;
+    height: 75px;
+    width:75px ;
+    flex-shrink: 0;
+    box-shadow: 0 2px 5px 1px var(--global--color-light-gray);
+}
 </style>
 <?php
 /**
@@ -61,8 +72,28 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
     <header class="entry-header alignwide">
-        <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+        <div class="d-flex justify-content-between">
+        <?php the_title( '<h6 class="entry-title">', '</h6>' ); ?>
+        <div class="post-time">
+            <?php $post = get_post();
+            $date = $post->post_date;
+            $day = date("d", strtotime($date));
+            $month = date("m", strtotime($date));
+            $year = date("y", strtotime($date));?>
+            <div class="ngay-thang">
+                <div class="ngay border-bottom border-dark">
+                    <?= $day ?>
+                </div>
+                <div class="thang border-top border-dark">
+                    <?= $month ?>
+                </div>
+            </div>
+            <div class="nam">
+                <?= $year?>
+            </div>
+        </div>
         <?php twenty_twenty_one_post_thumbnail(); ?>
+        </div>
     </header>
     <!-- .entry-header -->
     <div class="entry-content row">
