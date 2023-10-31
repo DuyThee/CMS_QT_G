@@ -88,8 +88,8 @@ a {
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&usqp=CAU" alt="">
                         </div>
                         <div class="page-excerpt">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae delectus debitis eaque, earum adipisci asperiores ab eligendi. Impedit corporis, veritatis id saepe provident iusto, sed incidunt neque aperiam, recusandae asperiores.
-                        </div>
+                            <p><?php get_template_part( 'template-parts/excerpt/excerpt', get_post_format() ); ?></p>
+                         </div>
                     </div>
 
                 </div>
