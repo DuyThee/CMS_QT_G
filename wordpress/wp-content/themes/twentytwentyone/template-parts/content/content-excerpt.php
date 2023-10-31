@@ -81,6 +81,17 @@ a {
         <div class="list_new_view">
             <div class="row">
                 <div class="col-md-3">
+                    
+                    <!-- module 13 -->
+                    <div class="pages-card">
+                        <div class="page-img">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&usqp=CAU" alt="">
+                        </div>
+                        <div class="page-excerpt">
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae delectus debitis eaque, earum adipisci asperiores ab eligendi. Impedit corporis, veritatis id saepe provident iusto, sed incidunt neque aperiam, recusandae asperiores.
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-md-6 top_news_block_desc">
                     <div class="row">
