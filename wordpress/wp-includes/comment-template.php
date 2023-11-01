@@ -10,7 +10,7 @@
 		border: solid 1px black !important;
 	}
 	button{
-		background-color: #007bff !important;
+		background-color: #1a701a !important;
 	}
 </style>
 <?php

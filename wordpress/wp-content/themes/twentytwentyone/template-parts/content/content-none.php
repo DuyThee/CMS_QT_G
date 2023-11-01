@@ -52,8 +52,8 @@
             <?php
 				printf(
 					/* translators: %s: Search term. */
-					esc_html__('Search:"%s"', 'twentytwentyone'),
-					'<span class="page-description search-term "style="color:black;">' . esc_html(get_search_query()) . '</span>'
+					esc_html__('Search: %s', 'twentytwentyone'),
+					'<span class="page-description search-term "style="color:black;">' . "''".esc_html(get_search_query()) . "''". '</span>'
 				);
 				?>
         </h5>
