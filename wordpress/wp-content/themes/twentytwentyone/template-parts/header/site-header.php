@@ -190,7 +190,7 @@ $wrapper_classes .= has_nav_menu( 'primary' ) ? ' has-menu' : '';
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:81/CMS_QT_G/wordpress/2023/10/29/vai-tro-cua-giao-duc-trong-xa-hoi-hien-dai/">
+                    <a class="nav-link" href="http://localhost:81/CMS_QT_G/wordpress/2023/10/29/thoi-su/">
                         <!-- <i class="fa fa-solid fa-ellipsis"></i> -->
                         Thời Sự 
                     </a>
