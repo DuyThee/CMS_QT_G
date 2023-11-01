@@ -62,6 +62,10 @@
 a {
     text-decoration: none;
 }
+.page-excerpt{
+    height: 75px;
+    overflow: hidden;
+}
 </style>
 <?php
 /**
@@ -85,7 +89,7 @@ a {
                     <!-- module 13 -->
                     <div class="pages-card">
                         <div class="page-img">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&usqp=CAU" alt="">
+                            <img class="img-thumnail" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&usqp=CAU" alt="">
                         </div>
                         <div class="page-excerpt">
                             <p><?php get_template_part( 'template-parts/excerpt/excerpt', get_post_format() ); ?></p>
