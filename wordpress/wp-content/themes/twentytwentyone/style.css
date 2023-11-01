@@ -99,6 +99,8 @@ Twenty Twenty-One is distributed under the terms of the GNU GPL.
 /* Variables */
 :root {
 
+	
+
 	/* Font Family */
 	--global--font-primary: var(--font-headings, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif);
 	--global--font-secondary: var(--font-base, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif);
@@ -912,7 +914,7 @@ template {
 .page-content > *,
 .comment-content > *,
 .widget > * {
-	margin-top: var(--global--spacing-unit);
+	margin-top: 10px;
 	margin-bottom: var(--global--spacing-unit);
 }
 
@@ -1707,9 +1709,8 @@ button:not(:hover):not(:active):not(.has-background),
 input[type=submit]:not(:hover):not(:active):not(.has-background),
 input[type=reset]:not(:hover):not(:active):not(.has-background),
 .wp-block-search .wp-block-search__button:not(:hover):not(:active):not(.has-background),
-.wp-block-button .wp-block-button__link:not(:hover):not(:active):not(.has-background),
-.wp-block-file a.wp-block-file__button:not(:hover):not(:active):not(.has-background) {
-	background-color: var(--global--color-primary);
+.wp-block-button .wp-block-button__link:not(:hover):not(:active):not(.has-background) {
+	
 }
 
 .has-background .site .button:not(:hover):not(:active):not(.has-background),
@@ -5440,7 +5441,6 @@ h1.page-title {
 }
 
 .widget a {
-	color: var(--footer--color-link);
 	text-decoration: underline;
 	text-decoration-style: solid;
 	text-decoration-color: currentColor;
